@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="25dp"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:text="Welcome to your Diet's Best Friend."/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/recipeButton"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:onClick="RecipeClicked"
+            android:layout_margin="10dp"
+            android:text="Calories per Recipe:"
+            android:textAlignment="center"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/getCalory"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:inputType="number"
+            android:layout_margin="15dp"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:text=""
+            android:hint="....." />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+            android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/ingredientButton"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:onClick="IngredientClicked"
+            android:layout_margin="10dp"
+            android:text="Find your Ingredient:"
+            android:textAlignment="center"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/getQuery"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:inputType="text"
+            android:layout_margin="15dp"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:text=""
+            android:hint="....." />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/randomButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="RandomClicked"
+        android:layout_margin="10dp"
+        android:text="I'm feeling Lucky!!!"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+    />
+</LinearLayout>
