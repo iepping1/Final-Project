@@ -39,22 +39,17 @@ public class ReceptAdapter extends ArrayAdapter<Recept> {
         Recept recipe = recipes.get(position);
 
         String name = recipe.getName();
-        String instructions = recipe.getInstructions();
-        String vegetarian = recipe.getVegetarian().toString();
-        String gluten = recipe.getGluten().toString();
         String image = recipe.getImage();
-        String recipe_id = recipe.getRecipeId();
+        String content = recipe.getContent();
 
         //get references to item fields
         TextView named = convertView.findViewById(R.id.recipe_name);
-        TextView vegetated = convertView.findViewById(R.id.recipe_vegetarian);
-        TextView gluted = convertView.findViewById(R.id.recipe_gluten);
+        TextView counted = convertView.findViewById(R.id.recipe_content);
         imaged = convertView.findViewById(R.id.recept_image);
 
         // set text info to views
         named.setText(name);
-        vegetated.setText(vegetarian);
-        gluted.setText(gluten);
+        counted.setText(content);
 
         // set image to views
         imageLoader = ImageRequest.getInstance(this.getContext())

@@ -10,42 +10,41 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RecipeDetailRequest implements Response.ErrorListener, Response.Listener<JSONObject> {
+public class ItemDetailRequest implements Response.ErrorListener, Response.Listener<JSONObject> {
 
     // call methods for error and succesful requests
     public interface Callback {
-        void gotRecipeDetails(Recept recipe);
+        void gotIngredientDetails(Ingredient ingredient);
         void gotError(String message);
     }
 
     private Context context;
     private Callback callback;
-    public String recipe_id, message;
-    public Recept recipe;
+    public String ingredient_id, message;
+    public Ingredient ingredient;
 
     // constructor for context parameter
-    public RecipeDetailRequest(Context context, String message) {
+    public ItemDetailRequest(Context context, String message) {
         this.context = context;
         this.message = message;
     }
 
     // retrieves recipe information
-    void getRecipeDetails(Callback callback, String recipe_id){
+    void getIngredientDetails(Callback callback, String ingredient_id){
         this.callback = callback;
-        this.recipe_id = recipe_id;
+        this.ingredient_id = ingredient_id;
 
         // link to the recipe API
-        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" + message + "/information";
+        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/"
+                + message + "/information?amount=100&unit=gram";
 
-        Log.d("what went wrong is", "onResponse: " + recipe);
+        Log.d("what went wrong is", "onResponse: " + ingredient);
 
         // request the data from the API
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -68,26 +67,32 @@ public class RecipeDetailRequest implements Response.ErrorListener, Response.Lis
     public void onResponse(JSONObject object) {
 
         // define the recipe fields
-        String name, image, id, instructions, vegetarian, gluten;
+        String name, image, imaged, ingredient_id, protein, fat, carbs;
+        JSONObject nutrients, breakdown;
 
         try {
             // get all info from the site
-            name = object.getString("title");
-            image = object.getString("image");
-            id = object.getString("id");
-            instructions = object.getString("instructions");
-            vegetarian = object.getString("vegetarian");
-            gluten = object.getString("glutenFree");
+            name = object.getString("name");
+            imaged = object.getString("image");
+            image = "https://spoonacular.com/cdn/ingredients_500x500/" + imaged;
+            ingredient_id = object.getString("id");
+
+            nutrients = object.getJSONObject("nutrition");
+            breakdown = nutrients.getJSONObject("caloricBreakdown");
+
+            protein = breakdown.getString("percentProtein");
+            fat = breakdown.getString("percentFat");
+            carbs = breakdown.getString("percentCarbs");
 
             // add new recipe data to detail activity
-            recipe = new Recept(name, image, instructions, vegetarian, gluten, id);
+            ingredient = new Ingredient(name, image, protein, fat, carbs, ingredient_id);
         }
         // exception for network error
         catch (JSONException e) {
             e.printStackTrace();
         }
         // pass recipe back to calling activity
-        callback.gotRecipeDetails(recipe);
+        callback.gotIngredientDetails(ingredient);
     }
 
     // handles request errors

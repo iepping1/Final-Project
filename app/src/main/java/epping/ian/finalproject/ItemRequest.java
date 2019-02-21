@@ -38,7 +38,7 @@ public class ItemRequest implements Response.ErrorListener, Response.Listener<JS
         this.message = message;
     }
 
-    // retrieves recipe ID
+    // retrieves selected ingredients
     public void getIngredients(Callback callback, String message){
         this.callback = callback;
         this.message = message;
@@ -69,7 +69,7 @@ public class ItemRequest implements Response.ErrorListener, Response.Listener<JS
     public void onResponse(JSONObject response) {
 
         // define ingredient fields and array
-        String id, name, image, imaged, amount;
+        String ingredient_id, name, image, imaged, amount;
         JSONArray IngredientArray;
 
         try {
@@ -81,17 +81,18 @@ public class ItemRequest implements Response.ErrorListener, Response.Listener<JS
                     JSONObject object = IngredientArray.getJSONObject(i);
 
                     // get all info from the site
-                    id = object.getString("id");
+                    ingredient_id = object.getString("id");
                     name = object.getString("name");
                     imaged = object.getString("image");
                     image = "https://spoonacular.com/cdn/ingredients_100x100/" + imaged;
                     amount = object.getString("originalString");
 
                     // add new ingredient item to arraylist
-                    ingredients.add(new Ingredient(id, name, image, amount));
+                    ingredients.add(new Ingredient(name, image, amount, ingredient_id));
                 }
             }
-            else {
+            else if (message.charAt(0) == 'f') {
+
                 IngredientArray = response.getJSONArray("products");
 
                 // fill list with all ingredient items
@@ -99,13 +100,12 @@ public class ItemRequest implements Response.ErrorListener, Response.Listener<JS
                     JSONObject object = IngredientArray.getJSONObject(i);
 
                     // get all info from the site
-                    id = object.getString("id");
+                    ingredient_id = object.getString("id");
                     name = object.getString("title");
                     image = object.getString("image");
-                    amount = "null";
 
                     // add new ingredient item to arraylist
-                    ingredients.add(new Ingredient(id, name, image, amount));
+                    ingredients.add(new Ingredient(name, image, ingredient_id));
                 }
             }
         }

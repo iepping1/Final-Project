@@ -43,7 +43,7 @@ public class RecipeRequest implements Response.ErrorListener, Response.Listener<
         this.message = message;
 
         // link to the recipe API
-        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=5&ingredients=" + message;
+        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findBy" + message;
 
         Log.d("what went wrong is", "onResponse: " + recipes);
 
@@ -68,27 +68,37 @@ public class RecipeRequest implements Response.ErrorListener, Response.Listener<
     public void onResponse(JSONArray jsonArray) {
 
         // define the recipe fields
-        String name, image, instructions, vegetarian, gluten, id;
+        String name, image, count, content, recipe_id;
 
         try {
             // fill list with all recipe data
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject object = jsonArray.getJSONObject(i);
+            if (message.charAt(0) == 'I') {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.getJSONObject(i);
 
-                    // get all info from the site
-                name = object.getString("title");
-                image = object.getString("image");
-                instructions = "No Instructions";
-                vegetarian = "unknown";
-                gluten = "unknown";
-                id = object.getString("id");
-                //instructions = object.getString("instructions");
-                //vegetarian = object.getString("vegetarian");
-                //gluten = object.getString("glutenFree");
+                    name = object.getString("title");
+                    image = object.getString("image");
+                    count = object.getString("usedIngredientCount");
+                    content = count + "Used Ingredients";
+                    recipe_id = object.getString("id");
 
-                // add new menu item to arraylist
-                //recipes.add(new Recept2(name, image, id));
-                recipes.add(new Recept(name, image, instructions, vegetarian, gluten, id));
+                    // add new ingredient recipe item to arraylist
+                    recipes.add(new Recept(name, image, content, recipe_id));
+                }
+            }
+            else if (message.charAt(0) == 'N') {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.getJSONObject(i);
+
+                    name = object.getString("title");
+                    image = object.getString("image");
+                    count = object.getString("calories");
+                    content = "Calory Amount = " + count;
+                    recipe_id = object.getString("id");
+
+                    // add new nutrient recipe item to arraylist
+                    recipes.add(new Recept(name, image, content, recipe_id));
+                }
             }
         }
         // exception for network error

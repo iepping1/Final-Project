@@ -15,14 +15,14 @@ import com.android.volley.toolbox.NetworkImageView;
 import java.util.ArrayList;
 
 // connect menu item with activity menu
-public class ReceptAdapter2 extends ArrayAdapter<Recept2> {
+public class RandomAdapter extends ArrayAdapter<Recept> {
 
-    ArrayList<Recept2> recipes;
+    ArrayList<Recept> recipes;
     NetworkImageView imaged;
     ImageLoader imageLoader;
     private Context context;
 
-    public ReceptAdapter2(@NonNull Context context, int resource, @NonNull ArrayList<Recept2> objects) {
+    public RandomAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Recept> objects) {
         super(context, resource, objects);
         recipes = objects;
     }
@@ -36,25 +36,23 @@ public class ReceptAdapter2 extends ArrayAdapter<Recept2> {
         }
 
         // get item info
-        Recept2 recipe = recipes.get(position);
+        Recept recipe = recipes.get(position);
 
         String name = recipe.getName();
-        //String instructions = recipe.getInstructions();
-        //String vegetarian = recipe.getVegetarian().toString();
-        //String gluten = recipe.getGluten().toString();
         String image = recipe.getImage();
-        String id = recipe.getRecipeId();
+        String vegetarian = recipe.getVegetarian().toString();
+        String gluten = recipe.getGluten().toString();
 
         //get references to item fields
         TextView named = convertView.findViewById(R.id.recipe_name);
-        //TextView vegetated = convertView.findViewById(R.id.recipe_vegetarian);
-        //TextView gluted = convertView.findViewById(R.id.recipe_gluten);
+        TextView vegetated = convertView.findViewById(R.id.recipe_content);
+        TextView gluted = convertView.findViewById(R.id.recipe_gluten);
         imaged = convertView.findViewById(R.id.recept_image);
 
         // set text info to views
         named.setText(name);
-        //vegetated.setText(vegetarian);
-        //gluted.setText(gluten);
+        vegetated.setText("This recipe is Vegetarian: " + vegetarian);
+        gluted.setText("This recipe is glutenfree: "+ gluten);
 
         // set image to views
         imageLoader = ImageRequest.getInstance(this.getContext())

@@ -10,12 +10,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class ItemActivity extends AppCompatActivity implements ItemRequest.Callback{
+public class ItemActivity extends AppCompatActivity implements ItemRequest.Callback, AutoItemRequest.Callback {
 
 
-    String recipe;
-    String query;
-    String message;
+    String recipe, id_message, message;
 
 
         // create the ingredient window
@@ -30,17 +28,19 @@ public class ItemActivity extends AppCompatActivity implements ItemRequest.Callb
             if (intent.getStringExtra("recipe_id") != null) {
                 recipe = intent.getStringExtra("recipe_id");
                 message = "recipes/" + recipe + "/information";
+
+                // get ingredient connected to recipe
+                ItemRequest request = new ItemRequest(this, message);
+                request.getIngredients(this, message);
             }
 
-            //else { message = Integer.toString(random); }
             else if (intent.getStringExtra("query") != null) {
-                    query = intent.getStringExtra("query");
-                    message = "food/products/search?number=5&query=" + query;
-            }
+                message = intent.getStringExtra("query");
 
-            // get the ingredient from the site
-            ItemRequest request = new ItemRequest(this, message);
-            request.getIngredients(this, message);
+                // get ingredient connected to query
+                AutoItemRequest autoRequest = new AutoItemRequest(this, message);
+                autoRequest.getAutoIngredients(this, message);
+            }
         }
 
         @Override
@@ -66,7 +66,15 @@ public class ItemActivity extends AppCompatActivity implements ItemRequest.Callb
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 Intent intent = new Intent(epping.ian.finalproject.ItemActivity.this, ItemDetailActivity.class);
-                intent.putExtra("ingredient", (Ingredient) adapterView.getItemAtPosition(i));
+                Ingredient ingredient = (Ingredient) adapterView.getItemAtPosition(i);
+
+                // check if ingredient has id
+                id_message = ingredient.getId();
+                if (id_message != null) {
+                    intent.putExtra("id_message", id_message.toString());
+                }
+                else { intent.putExtra("ingredient", ingredient);}
+
                 startActivity(intent);
             }
         }

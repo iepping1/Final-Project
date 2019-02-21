@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,21 +15,34 @@
         android:gravity="center_horizontal"
         android:textAlignment="center"
         android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/recipe_scroller"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/recept_detail_image"
-        android:layout_width="120dp"
-        android:layout_height="90dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:cropToPadding="true"
         android:scaleType="fitCenter"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        app:layout_constraintTop_toBottomOf="@id/recipe_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/recipe_scroller"
+        app:layout_constraintBottom_toTopOf="@id/ingredient_button"/>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:fillViewport="true">
+        android:id="@+id/recipe_scroller"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/recipe_name"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/recept_detail_image"
+        app:layout_constraintBottom_toTopOf="@id/return_buttonR">
         <TextView
             android:id="@+id/recipe_instructions"
             android:layout_width="match_parent"
@@ -48,7 +61,9 @@
         android:layout_margin="10dp"
         android:text="I want to see the Ingredients"
         android:textAlignment="center"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
         android:id="@+id/return_buttonR"
@@ -59,5 +74,9 @@
         android:layout_margin="10dp"
         android:text="Take me Back to Main Menu"
         android:textAlignment="center"
-        android:textSize="20sp"/>
-</LinearLayout>
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>

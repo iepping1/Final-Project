@@ -32,7 +32,7 @@ public class RandomActivity extends AppCompatActivity implements RandomRequest.C
 
     @Override
     public void gotRecipes(ArrayList<Recept> recipes) {
-        ReceptAdapter adapter = new ReceptAdapter(this, R.layout.recept, recipes);
+        RandomAdapter adapter = new RandomAdapter(this, R.layout.recept, recipes);
 
         // connect adapter to listview
         ListView recipeList = findViewById(R.id.recipeList);

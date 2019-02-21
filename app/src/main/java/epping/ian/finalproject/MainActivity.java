@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,11 +15,17 @@ public class MainActivity extends AppCompatActivity {
     EditText getCalory;
     String query;
     EditText getQuery;
+    private ProgressBar spinner;
 
+    // Start up main screen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // set up progressbar spinner
+        spinner = findViewById(R.id.progressBar);
+        spinner.setVisibility(View.GONE);
 
         getCalory = findViewById(R.id.getCalory);
         getQuery = findViewById(R.id.getQuery);
@@ -39,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
             intent.putExtra("calories", calories);
             startActivity(intent);
+            spinner.setVisibility(View.VISIBLE);
         }
     }
 
@@ -48,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(query.equals("")){
             // ask user to input calory treshold
-            Toast toast = Toast.makeText(this, "Need information first", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Need some letters first", Toast.LENGTH_SHORT);
             toast.show();
         }
         else {
@@ -56,11 +64,15 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("query", query);
             startActivity(intent);
         }
+
+        // Show loading spinner
+        spinner.setVisibility(View.VISIBLE);
     }
 
     // Move to random recipe
     public void RandomClicked (View view){
         Intent intent = new Intent(MainActivity.this, RandomActivity.class);
         startActivity(intent);
+        spinner.setVisibility(View.VISIBLE);
     }
 }

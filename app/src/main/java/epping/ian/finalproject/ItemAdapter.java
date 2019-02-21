@@ -40,7 +40,6 @@ public class ItemAdapter extends ArrayAdapter<Ingredient> {
 
         String name = ingredient.getName();
         String image = ingredient.getImageURL();
-        String id = ingredient.getId();
         String amount = ingredient.getAmount();
 
         //get references to item fields
