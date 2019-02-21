@@ -69,7 +69,7 @@ public class AutoItemRequest implements Response.ErrorListener, Response.Listene
     public void onResponse(JSONArray jsonArray) {
 
         // define ingredient fields and array
-        String name, image, imaged;
+        String name, image, imaged, amount;
 
         try {
             // fill list with all ingredient items
@@ -80,9 +80,10 @@ public class AutoItemRequest implements Response.ErrorListener, Response.Listene
                 name = object.getString("name");
                 imaged = object.getString("image");
                 image = "https://spoonacular.com/cdn/ingredients_100x100/" + imaged;
+                amount = "Click to see Recipes with this Ingredient";
 
                 // add new ingredient item to arraylist
-                ingredients.add(new Ingredient(name, image));
+                ingredients.add(new Ingredient(name, image, amount));
             }
         }
         // exception for network error

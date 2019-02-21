@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,6 +39,13 @@ public class RandomActivity extends AppCompatActivity implements RandomRequest.C
 
         // connect adapter to listview
         ListView recipeList = findViewById(R.id.recipeList);
+
+        LayoutInflater inflater = getLayoutInflater();
+        ViewGroup header =  (ViewGroup)inflater.inflate(R.layout.listview_header, recipeList, false);
+        TextView HeaderText = header.findViewById(R.id.header);
+        HeaderText.setText("List of Random Recipes");
+        recipeList.addHeaderView(header, null, false);
+
         recipeList.setAdapter(adapter);
         recipeList.setOnItemClickListener(new ListClickListener());
     }

@@ -18,8 +18,8 @@ import java.util.ArrayList;
 public class RandomAdapter extends ArrayAdapter<Recept> {
 
     ArrayList<Recept> recipes;
-    NetworkImageView imaged;
-    ImageLoader imageLoader;
+    private NetworkImageView imaged;
+    private ImageLoader imageLoader;
     private Context context;
 
     public RandomAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Recept> objects) {
@@ -40,8 +40,8 @@ public class RandomAdapter extends ArrayAdapter<Recept> {
 
         String name = recipe.getName();
         String image = recipe.getImage();
-        String vegetarian = recipe.getVegetarian().toString();
-        String gluten = recipe.getGluten().toString();
+        String vegetarian = "Vegetarian: " + recipe.getVegetarian();
+        String gluten = "Glutenfree: " + recipe.getGluten();
 
         //get references to item fields
         TextView named = convertView.findViewById(R.id.recipe_name);
@@ -51,8 +51,8 @@ public class RandomAdapter extends ArrayAdapter<Recept> {
 
         // set text info to views
         named.setText(name);
-        vegetated.setText("This recipe is Vegetarian: " + vegetarian);
-        gluted.setText("This recipe is glutenfree: "+ gluten);
+        vegetated.setText(vegetarian);
+        gluted.setText(gluten);
 
         // set image to views
         imageLoader = ImageRequest.getInstance(this.getContext())

@@ -68,14 +68,21 @@ public class RecipeDetailRequest implements Response.ErrorListener, Response.Lis
     public void onResponse(JSONObject object) {
 
         // define the recipe fields
-        String name, image, id, instructions, vegetarian, gluten;
+        String name, image, id, instructed, instructions, vegetarian, gluten;
+        String no_instructions = "NULL";
 
         try {
             // get all info from the site
             name = object.getString("title");
             image = object.getString("image");
             id = object.getString("id");
-            instructions = object.getString("instructions");
+
+            // some recipes dont have instructions
+            instructed = object.getString("instructions");
+            if ( instructed.toLowerCase().indexOf(no_instructions.toLowerCase()) != -1) {
+                instructions = "This recipe has no Instructions"; }
+            else{ instructions = instructed;}
+
             vegetarian = object.getString("vegetarian");
             gluten = object.getString("glutenFree");
 

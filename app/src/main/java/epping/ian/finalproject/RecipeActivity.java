@@ -1,17 +1,15 @@
 package epping.ian.finalproject;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -53,19 +51,21 @@ public class RecipeActivity extends AppCompatActivity implements RecipeRequest.C
         // find list
         ListView recipeList = findViewById(R.id.recipeList);
 
-        // adds header to listview
+        // adds header to list
         LayoutInflater inflater = getLayoutInflater();
         ViewGroup header =  (ViewGroup)inflater.inflate(R.layout.listview_header, recipeList, false);
+        TextView HeaderText = header.findViewById(R.id.header);
+        HeaderText.setText("List of Recipes");
         recipeList.addHeaderView(header, null, false);
 
-        // connect adapter to listview
+        // connect adapter to list
         recipeList.setAdapter(adapter);
         recipeList.setOnItemClickListener(new ListClickListener());
     }
 
+    // send a message if error has occured
     @Override
     public void gotError(String message) {
-        // send a message if error has occured
         Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         toast.show();
     }
@@ -77,9 +77,10 @@ public class RecipeActivity extends AppCompatActivity implements RecipeRequest.C
 
             Intent intent = new Intent(RecipeActivity.this, RecipeDetailActivity.class);
             Recept recipe = (Recept) adapterView.getItemAtPosition(i);
+
+            // pass on id of recipe
             id_message = recipe.getRecipeId();
             intent.putExtra("id_message", id_message.toString() );
-
             startActivity(intent);
         }
     }

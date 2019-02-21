@@ -3,10 +3,6 @@ package epping.ian.finalproject;
 import android.content.Context;
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -14,6 +10,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -73,40 +73,21 @@ public class ItemRequest implements Response.ErrorListener, Response.Listener<JS
         JSONArray IngredientArray;
 
         try {
-            if (message.charAt(0) == 'r') {
-                IngredientArray = response.getJSONArray("extendedIngredients");
+            IngredientArray = response.getJSONArray("extendedIngredients");
 
-                // fill list with all ingredient items
-                for (int i = 0; i < IngredientArray.length(); i++) {
-                    JSONObject object = IngredientArray.getJSONObject(i);
+            // fill list with all ingredient items
+            for (int i = 0; i < IngredientArray.length(); i++) {
+                JSONObject object = IngredientArray.getJSONObject(i);
 
-                    // get all info from the site
-                    ingredient_id = object.getString("id");
-                    name = object.getString("name");
-                    imaged = object.getString("image");
-                    image = "https://spoonacular.com/cdn/ingredients_100x100/" + imaged;
-                    amount = object.getString("originalString");
+                // get all info from the site
+                ingredient_id = object.getString("id");
+                name = object.getString("name");
+                imaged = object.getString("image");
+                image = "https://spoonacular.com/cdn/ingredients_100x100/" + imaged;
+                amount = object.getString("originalString");
 
-                    // add new ingredient item to arraylist
-                    ingredients.add(new Ingredient(name, image, amount, ingredient_id));
-                }
-            }
-            else if (message.charAt(0) == 'f') {
-
-                IngredientArray = response.getJSONArray("products");
-
-                // fill list with all ingredient items
-                for (int i = 0; i < IngredientArray.length(); i++) {
-                    JSONObject object = IngredientArray.getJSONObject(i);
-
-                    // get all info from the site
-                    ingredient_id = object.getString("id");
-                    name = object.getString("title");
-                    image = object.getString("image");
-
-                    // add new ingredient item to arraylist
-                    ingredients.add(new Ingredient(name, image, ingredient_id));
-                }
+                // add new ingredient item to arraylist
+                ingredients.add(new Ingredient(name, image, amount, ingredient_id));
             }
         }
         // exception for network error
