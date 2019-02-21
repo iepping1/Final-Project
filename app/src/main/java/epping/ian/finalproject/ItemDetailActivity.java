@@ -49,6 +49,8 @@ public class ItemDetailActivity extends AppCompatActivity implements ItemDetailR
         }
     }
 
+    // todo: add report
+
     @Override
     public void gotIngredientDetails(Ingredient ingredient) {
 
