@@ -8,7 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -16,10 +16,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.HashMap;
 
-public class AutoItemRequest implements Response.ErrorListener, Response.Listener<JSONArray> {
+public class IngredientRequest implements Response.ErrorListener, Response.Listener<JSONObject> {
 
     // call methods for error and succesful requests
     public interface Callback {
@@ -33,24 +33,24 @@ public class AutoItemRequest implements Response.ErrorListener, Response.Listene
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
 
     // constructor for context parameter
-    public AutoItemRequest(Context context, String message) {
+    public IngredientRequest(Context context, String message) {
         this.context = context;
         this.message = message;
     }
 
-    // retrieves recipe ID
-    public void getAutoIngredients(Callback callback, String message){
+    // retrieves selected ingredients
+    public void getIngredients(Callback callback, String message){
         this.callback = callback;
         this.message = message;
 
         // link to the API site
-        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/autocomplete?number=6&query=" + message;
+        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/" + message;
 
         // define the request
         RequestQueue queue = Volley.newRequestQueue(context);
 
         // request the data from the API
-        JsonArrayRequest autoRequest = new JsonArrayRequest(
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, url, null, this, this) {
 
             // provides API key
@@ -61,29 +61,33 @@ public class AutoItemRequest implements Response.ErrorListener, Response.Listene
                 return params;
             }
         };
-        queue.add(autoRequest);
+        queue.add(jsonObjectRequest);
     }
 
     // listener for succesful requests
     @Override
-    public void onResponse(JSONArray jsonArray) {
+    public void onResponse(JSONObject response) {
 
         // define ingredient fields and array
-        String name, image, imaged, amount;
+        String ingredient_id, name, image, imaged, amount;
+        JSONArray IngredientArray;
 
         try {
+            IngredientArray = response.getJSONArray("extendedIngredients");
+
             // fill list with all ingredient items
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject object = jsonArray.getJSONObject(i);
+            for (int i = 0; i < IngredientArray.length(); i++) {
+                JSONObject object = IngredientArray.getJSONObject(i);
 
                 // get all info from the site
+                ingredient_id = object.getString("id");
                 name = object.getString("name");
                 imaged = object.getString("image");
                 image = "https://spoonacular.com/cdn/ingredients_100x100/" + imaged;
-                amount = "Click to see Recipes with this Ingredient";
+                amount = object.getString("originalString");
 
                 // add new ingredient item to arraylist
-                ingredients.add(new Ingredient(name, image, amount));
+                ingredients.add(new Ingredient(name, image, amount, ingredient_id));
             }
         }
         // exception for network error

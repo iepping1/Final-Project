@@ -5,7 +5,7 @@
     android:orientation="horizontal">
 
     <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/recept_image"
+        android:id="@+id/recipe_image"
         android:layout_width="100dp"
         android:layout_height="match_parent"
         android:cropToPadding="true"

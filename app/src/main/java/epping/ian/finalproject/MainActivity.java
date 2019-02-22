@@ -42,15 +42,18 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
         }
         else {
-            // pass on calory treshold
+            // show loading spinner
+            spinner.setVisibility(View.VISIBLE);
+
+            // pass on calory treshold and move to recipe list
             Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
             intent.putExtra("calories", calories);
             startActivity(intent);
-            spinner.setVisibility(View.VISIBLE);
+            spinner.setVisibility(View.GONE);
         }
     }
 
-    // Move to ingredient list
+    // Search for ingredients
     public void IngredientClicked (View view){
         query = getQuery.getText().toString();
 
@@ -60,19 +63,27 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
         }
         else {
-            Intent intent = new Intent(MainActivity.this, ItemActivity.class);
+            // show loading spinner
+            spinner.setVisibility(View.VISIBLE);
+
+            // move to ingredient list
+            Intent intent = new Intent(MainActivity.this, IngredientActivity.class);
             intent.putExtra("query", query);
             startActivity(intent);
-        }
 
-        // Show loading spinner
-        spinner.setVisibility(View.VISIBLE);
+            // Hide loading spinner
+            spinner.setVisibility(View.GONE);
+        }
     }
 
-    // Move to random recipe
+    // Search recipes randomly
     public void RandomClicked (View view){
+        // show loading spinner
+        spinner.setVisibility(View.VISIBLE);
+
+        // move to random recipe list
         Intent intent = new Intent(MainActivity.this, RandomActivity.class);
         startActivity(intent);
-        spinner.setVisibility(View.VISIBLE);
+        spinner.setVisibility(View.GONE);
     }
 }

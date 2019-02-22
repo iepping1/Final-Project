@@ -24,8 +24,8 @@
         </activity>
         <activity android:name=".RecipeActivity" />
         <activity android:name=".RecipeDetailActivity" />
-        <activity android:name=".ItemActivity" />
-        <activity android:name=".ItemDetailActivity" />
+        <activity android:name=".IngredientActivity" />
+        <activity android:name=".IngredientDetailActivity" />
         <activity android:name=".RandomActivity"></activity>
     </application>
 

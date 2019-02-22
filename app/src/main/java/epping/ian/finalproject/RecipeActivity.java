@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -16,12 +17,16 @@ import java.util.ArrayList;
 public class RecipeActivity extends AppCompatActivity implements RecipeRequest.Callback{
 
     String message, id_message, ingredient_input, calory_input;
+    ProgressBar spinner;
 
     // Create recipe list window
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+
+        spinner = findViewById(R.id.progressBarR);
+        spinner.setVisibility(View.GONE);
 
         Intent intent = getIntent();
 
@@ -46,7 +51,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeRequest.C
 
     @Override
     public void gotRecipes(ArrayList<Recept> recipes) {
-        ReceptAdapter adapter = new ReceptAdapter(this, R.layout.recept, recipes);
+        RecipeAdapter adapter = new RecipeAdapter(this, R.layout.recept, recipes);
 
         // find list
         ListView recipeList = findViewById(R.id.recipeList);
@@ -75,6 +80,8 @@ public class RecipeActivity extends AppCompatActivity implements RecipeRequest.C
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+            spinner.setVisibility(View.VISIBLE);
+
             Intent intent = new Intent(RecipeActivity.this, RecipeDetailActivity.class);
             Recept recipe = (Recept) adapterView.getItemAtPosition(i);
 
@@ -82,6 +89,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeRequest.C
             id_message = recipe.getRecipeId();
             intent.putExtra("id_message", id_message.toString() );
             startActivity(intent);
+            spinner.setVisibility(View.GONE);
         }
     }
 }

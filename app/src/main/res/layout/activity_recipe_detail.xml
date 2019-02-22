@@ -9,7 +9,7 @@
     tools:context=".RecipeDetailActivity">
 
     <TextView
-        android:id="@+id/recipe_name"
+        android:id="@+id/recipe_detail_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -18,7 +18,7 @@
         android:textStyle="bold" />
 
     <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/recept_detail_image"
+        android:id="@+id/recipe_detail_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:cropToPadding="true"
@@ -60,4 +60,10 @@
         android:text="Take me Back to Main Menu"
         android:textAlignment="center"
         android:textSize="20sp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBarDR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:progressDrawable="@drawable/circular_progress_bar" />
 </LinearLayout>

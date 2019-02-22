@@ -16,7 +16,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ItemDetailRequest implements Response.ErrorListener, Response.Listener<JSONObject> {
+public class IngredientDetailRequest implements Response.ErrorListener, Response.Listener<JSONObject> {
 
     // call methods for error and succesful requests
     public interface Callback {
@@ -30,7 +30,7 @@ public class ItemDetailRequest implements Response.ErrorListener, Response.Liste
     public Ingredient ingredient;
 
     // constructor for context parameter
-    public ItemDetailRequest(Context context, String message) {
+    public IngredientDetailRequest(Context context, String message) {
         this.context = context;
         this.message = message;
     }

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="20dp"
-    tools:context=".ItemDetailActivity">
+    tools:context=".IngredientDetailActivity">
 
     <TextView
         android:id="@+id/ingredient_detail_name"
@@ -104,5 +104,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/recipe_button"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/progressBarDI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:progressDrawable="@drawable/circular_progress_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ingredient_detail_name"
+        app:layout_constraintRight_toLeftOf="@id/ingredient_detail_image"/>
 
 </android.support.constraint.ConstraintLayout>

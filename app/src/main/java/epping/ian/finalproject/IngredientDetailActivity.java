@@ -4,22 +4,26 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
-public class ItemDetailActivity extends AppCompatActivity implements ItemDetailRequest.Callback {
+public class IngredientDetailActivity extends AppCompatActivity implements IngredientDetailRequest.Callback {
 
     String ingredient_name, message, ingredient_id;
     ImageLoader imageLoader;
+    ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
         imageLoader = ImageRequest.getInstance(this.getApplicationContext()).getImageLoader();
+        spinner = findViewById(R.id.progressBarDI);
+        spinner.setVisibility(View.GONE);
 
         // show proper ingredient item
         Intent intent = getIntent();
@@ -28,7 +32,7 @@ public class ItemDetailActivity extends AppCompatActivity implements ItemDetailR
         if (intent.getStringExtra("id_message") != null) {
             message = intent.getStringExtra("id_message");
 
-            ItemDetailRequest detailRequest = new ItemDetailRequest(this, message);
+            IngredientDetailRequest detailRequest = new IngredientDetailRequest(this, message);
             detailRequest.getIngredientDetails(this, message);
         }
         else {
@@ -86,13 +90,17 @@ public class ItemDetailActivity extends AppCompatActivity implements ItemDetailR
 
     // switch to list of recipes with this ingredient
     public void SearchClicked (View view){
-        Intent intent = new Intent(ItemDetailActivity.this, RecipeActivity.class);
+        spinner.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(IngredientDetailActivity.this, RecipeActivity.class);
         intent.putExtra("ingredient_detail_name", ingredient_name);
         startActivity(intent);
+        spinner.setVisibility(View.GONE);
     }
 
     public void ReturnClickedI (View view){
-        Intent intent = new Intent(ItemDetailActivity.this, MainActivity.class);
+        spinner.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(IngredientDetailActivity.this, MainActivity.class);
         startActivity(intent);
+        spinner.setVisibility(View.GONE);
     }
 }

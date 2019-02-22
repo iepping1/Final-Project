@@ -8,15 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class ItemActivity extends AppCompatActivity implements ItemRequest.Callback, AutoItemRequest.Callback {
+public class IngredientActivity extends AppCompatActivity implements IngredientRequest.Callback, AutoIngredientRequest.Callback {
 
 
     String recipe, id_message, message;
+    ProgressBar spinner;
 
 
         // create the ingredient window
@@ -24,6 +26,9 @@ public class ItemActivity extends AppCompatActivity implements ItemRequest.Callb
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_item);
+
+            spinner = findViewById(R.id.progressBarI);
+            spinner.setVisibility(View.GONE);
 
             Intent intent = getIntent();
 
@@ -33,7 +38,7 @@ public class ItemActivity extends AppCompatActivity implements ItemRequest.Callb
                 message = "recipes/" + recipe + "/information";
 
                 // get ingredient connected to recipe
-                ItemRequest request = new ItemRequest(this, message);
+                IngredientRequest request = new IngredientRequest(this, message);
                 request.getIngredients(this, message);
             }
 
@@ -41,14 +46,14 @@ public class ItemActivity extends AppCompatActivity implements ItemRequest.Callb
                 message = intent.getStringExtra("query");
 
                 // get ingredient connected to query
-                AutoItemRequest autoRequest = new AutoItemRequest(this, message);
+                AutoIngredientRequest autoRequest = new AutoIngredientRequest(this, message);
                 autoRequest.getAutoIngredients(this, message);
             }
         }
 
         @Override
         public void gotItems(ArrayList<Ingredient> items) {
-            ItemAdapter adapter = new ItemAdapter(this, R.layout.ingredient, items);
+            IngredientAdapter adapter = new IngredientAdapter(this, R.layout.ingredient, items);
 
             // connect adapter to listview
             ListView itemList = findViewById(R.id.itemList);
@@ -61,7 +66,7 @@ public class ItemActivity extends AppCompatActivity implements ItemRequest.Callb
             itemList.addHeaderView(header, null, false);
 
             itemList.setAdapter(adapter);
-            itemList.setOnItemClickListener(new epping.ian.finalproject.ItemActivity.ListClickListener());
+            itemList.setOnItemClickListener(new IngredientActivity.ListClickListener());
         }
 
         @Override
@@ -76,7 +81,8 @@ public class ItemActivity extends AppCompatActivity implements ItemRequest.Callb
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Intent intent = new Intent(epping.ian.finalproject.ItemActivity.this, ItemDetailActivity.class);
+                //spinner.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(IngredientActivity.this, IngredientDetailActivity.class);
                 Ingredient ingredient = (Ingredient) adapterView.getItemAtPosition(i);
 
                 // check if ingredient has id
@@ -87,6 +93,7 @@ public class ItemActivity extends AppCompatActivity implements ItemRequest.Callb
                 else { intent.putExtra("ingredient", ingredient);}
 
                 startActivity(intent);
+                //spinner.setVisibility(View.GONE);
             }
         }
 }

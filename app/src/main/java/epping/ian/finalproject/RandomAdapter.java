@@ -47,7 +47,7 @@ public class RandomAdapter extends ArrayAdapter<Recept> {
         TextView named = convertView.findViewById(R.id.recipe_name);
         TextView vegetated = convertView.findViewById(R.id.recipe_content);
         TextView gluted = convertView.findViewById(R.id.recipe_gluten);
-        imaged = convertView.findViewById(R.id.recept_image);
+        imaged = convertView.findViewById(R.id.recipe_image);
 
         // set text info to views
         named.setText(name);

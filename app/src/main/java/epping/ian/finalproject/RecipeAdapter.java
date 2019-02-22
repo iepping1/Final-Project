@@ -14,17 +14,16 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 
-// connect menu item with activity menu
-public class ItemAdapter extends ArrayAdapter<Ingredient> {
+// connect recipe item with recipe list
+public class RecipeAdapter extends ArrayAdapter<Recept> {
 
-    ArrayList<Ingredient> ingredients;
+    ArrayList<Recept> recipes;
     NetworkImageView imaged;
     ImageLoader imageLoader;
-    private Context context;
 
-    public ItemAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Ingredient> objects) {
+    public RecipeAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Recept> objects) {
         super(context, resource, objects);
-        ingredients = objects;
+        recipes = objects;
     }
 
     // create fields for adapterview
@@ -32,24 +31,24 @@ public class ItemAdapter extends ArrayAdapter<Ingredient> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inf = LayoutInflater.from(getContext());
-            convertView = inf.inflate(R.layout.ingredient, parent, false);
+            convertView = inf.inflate(R.layout.recept, parent, false);
         }
 
         // get item info
-        Ingredient ingredient = ingredients.get(position);
+        Recept recipe = recipes.get(position);
 
-        String name = ingredient.getName();
-        String image = ingredient.getImageURL();
-        String amount = ingredient.getAmount();
+        String name = recipe.getName();
+        String image = recipe.getImage();
+        String content = recipe.getContent();
 
         //get references to item fields
-        TextView named = convertView.findViewById(R.id.ingredient_name);
-        TextView amounted = convertView.findViewById(R.id.ingredient_amount);
-        imaged = convertView.findViewById(R.id.ingredient_image);
+        TextView named = convertView.findViewById(R.id.recipe_name);
+        TextView counted = convertView.findViewById(R.id.recipe_content);
+        imaged = convertView.findViewById(R.id.recipe_image);
 
         // set text info to views
         named.setText(name);
-        amounted.setText(amount);
+        counted.setText(content);
 
         // set image to views
         imageLoader = ImageRequest.getInstance(this.getContext())

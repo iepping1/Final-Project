@@ -3,8 +3,8 @@ package epping.ian.finalproject;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +15,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
 
     String recipe_id, ingredient, message;
     ImageLoader imageLoader;
+    ProgressBar spinner;
 
     // Create recipe detail window
     @Override
@@ -23,9 +24,11 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
         setContentView(R.layout.activity_recipe_detail);
         imageLoader = ImageRequest.getInstance(this.getApplicationContext()).getImageLoader();
 
+        spinner = findViewById(R.id.progressBarDR);
+        spinner.setVisibility(View.GONE);
+
         // get name of ingredient
         Intent intent = getIntent();
-        //ingredient = intent.getStringExtra("ingredient_detail_name");
 
         // request detailed recipe information
         if (intent.getStringExtra("id_message") != null) {
@@ -41,9 +44,9 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
             recipe_id = recipe.getRecipeId();
 
             // declare fields of detailed recipe
-            TextView recipeName = findViewById(R.id.recipe_name);
+            TextView recipeName = findViewById(R.id.recipe_detail_name);
             TextView recipeInstructions = findViewById(R.id.recipe_instructions);
-            NetworkImageView recipeImage = findViewById(R.id.recept_detail_image);
+            NetworkImageView recipeImage = findViewById(R.id.recipe_detail_image);
 
             // set text
             recipeName.setText(recipe.getName());
@@ -63,12 +66,9 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
         recipe_id = recipe.getRecipeId();
 
         // declare fields of detailed recipe
-        TextView recipeName = findViewById(R.id.recipe_name);
+        TextView recipeName = findViewById(R.id.recipe_detail_name);
         TextView recipeInstructions = findViewById(R.id.recipe_instructions);
-        NetworkImageView recipeImage = findViewById(R.id.recept_detail_image);
-
-        // set scroller of textview
-        //recipeInstructions.setMovementMethod(new ScrollingMovementMethod());
+        NetworkImageView recipeImage = findViewById(R.id.recipe_detail_image);
 
         // connect selected recipe to views
         recipeName.setText(recipe.getName());
@@ -88,13 +88,17 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
 
     // switch to list of recipe's ingredients
     public void IngredientClicked (View view){
-        Intent intent = new Intent(RecipeDetailActivity.this, ItemActivity.class);
+        spinner.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(RecipeDetailActivity.this, IngredientActivity.class);
         intent.putExtra("recipe_id", recipe_id);
         startActivity(intent);
+        spinner.setVisibility(View.GONE);
     }
 
     public void ReturnClickedR (View view){
+        spinner.setVisibility(View.VISIBLE);
         Intent intent = new Intent(RecipeDetailActivity.this, MainActivity.class);
         startActivity(intent);
+        spinner.setVisibility(View.GONE);
     }
 }
