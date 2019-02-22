@@ -53,8 +53,6 @@ public class IngredientDetailActivity extends AppCompatActivity implements Ingre
         }
     }
 
-    // todo: add report
-
     @Override
     public void gotIngredientDetails(Ingredient ingredient) {
 
