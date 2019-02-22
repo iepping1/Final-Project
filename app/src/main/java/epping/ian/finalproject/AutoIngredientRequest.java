@@ -79,8 +79,8 @@ public class AutoIngredientRequest implements Response.ErrorListener, Response.L
                 // get all info from the site
                 name = object.getString("name");
                 imaged = object.getString("image");
-                image = "https://spoonacular.com/cdn/ingredients_100x100/" + imaged;
-                amount = "Click to see Recipes with this Ingredient";
+                image = "https://spoonacular.com/cdn/ingredients_500x500/" + imaged;
+                amount = "Want to See More?";
 
                 // add new ingredient item to arraylist
                 ingredients.add(new Ingredient(name, image, amount));
