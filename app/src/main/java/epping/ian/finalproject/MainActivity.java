@@ -31,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
         getQuery = findViewById(R.id.getQuery);
     }
 
+    // clear text inputs when returning to main
+    protected void onResume(){
+        super.onResume();
+        getCalory.setText("");
+        getQuery.setText("");
+    }
+
     // Move to selected recipe
     public void RecipeClicked (View view){
 
@@ -49,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
             intent.putExtra("calories", calories);
             startActivity(intent);
+
+            // clear spinner
             spinner.setVisibility(View.GONE);
         }
     }
@@ -63,15 +72,12 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
         }
         else {
-            // show loading spinner
             spinner.setVisibility(View.VISIBLE);
 
             // move to ingredient list
             Intent intent = new Intent(MainActivity.this, IngredientActivity.class);
             intent.putExtra("query", query);
             startActivity(intent);
-
-            // Hide loading spinner
             spinner.setVisibility(View.GONE);
         }
     }

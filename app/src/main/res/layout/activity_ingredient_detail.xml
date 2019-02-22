@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,40 +11,27 @@
     <TextView
         android:id="@+id/ingredient_detail_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:gravity="center_horizontal"
         android:textAlignment="center"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/ingredient_detail_image"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/ingredient_detail_image"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
         android:cropToPadding="true"
         android:scaleType="fitCenter"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
-        app:layout_constraintTop_toBottomOf="@id/ingredient_detail_name"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/ingredient_content"
-        app:layout_constraintBottom_toTopOf="@id/recipe_button"/>
+        android:layout_weight="1" />
 
     <LinearLayout
-        android:id="@+id/ingredient_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/ingredient_detail_name"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/ingredient_detail_image"
-        app:layout_constraintBottom_toTopOf="@id/return_buttonI">
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/ingredient_protein"
@@ -84,12 +70,9 @@
         android:layout_gravity="center"
         android:onClick="SearchClicked"
         android:layout_margin="10dp"
-        android:text="I want to see Recipes with these Ingredients"
+        android:text="Show me Recipes with this Ingredient"
         android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintLeft_toRightOf="@id/return_buttonI"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/return_buttonI"
@@ -98,20 +81,14 @@
         android:layout_gravity="center"
         android:onClick="ReturnClickedI"
         android:layout_margin="10dp"
-        android:text="Take me Back to Main Menu"
+        android:text="Take me Back to the Beginning"
         android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/recipe_button"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:textSize="20sp" />
 
     <ProgressBar
         android:id="@+id/progressBarDI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:progressDrawable="@drawable/circular_progress_bar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ingredient_detail_name"
-        app:layout_constraintRight_toLeftOf="@id/ingredient_detail_image"/>
+        android:progressDrawable="@drawable/circular_progress_bar" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

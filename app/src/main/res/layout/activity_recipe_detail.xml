@@ -20,11 +20,38 @@
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/recipe_detail_image"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:cropToPadding="true"
         android:scaleType="fitCenter"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/detail_vegetarian"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="20dp"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/detail_gluten"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -57,7 +84,7 @@
         android:layout_gravity="center"
         android:onClick="ReturnClickedR"
         android:layout_margin="10dp"
-        android:text="Take me Back to Main Menu"
+        android:text="Take me Back to the Beginning"
         android:textAlignment="center"
         android:textSize="20sp"/>
 

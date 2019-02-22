@@ -16,23 +16,21 @@ import java.util.ArrayList;
 
 public class IngredientActivity extends AppCompatActivity implements IngredientRequest.Callback, AutoIngredientRequest.Callback {
 
-
     String recipe, id_message, message;
     ProgressBar spinner;
-
 
         // create the ingredient window
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_item);
+            setContentView(R.layout.activity_ingredient);
 
             spinner = findViewById(R.id.progressBarI);
             spinner.setVisibility(View.GONE);
 
             Intent intent = getIntent();
 
-            // check from which activity item was chosen
+            // check from which activity ingredient was chosen
             if (intent.getStringExtra("recipe_id") != null) {
                 recipe = intent.getStringExtra("recipe_id");
                 message = "recipes/" + recipe + "/information";
@@ -52,25 +50,26 @@ public class IngredientActivity extends AppCompatActivity implements IngredientR
         }
 
         @Override
-        public void gotItems(ArrayList<Ingredient> items) {
-            IngredientAdapter adapter = new IngredientAdapter(this, R.layout.ingredient, items);
+        public void gotIngredients(ArrayList<Ingredient> ingredients) {
+            IngredientAdapter adapter = new IngredientAdapter(this, R.layout.ingredient, ingredients);
 
             // connect adapter to listview
-            ListView itemList = findViewById(R.id.itemList);
+            ListView ingredientList = findViewById(R.id.ingredientList);
+            String ingredientListed = "List of Ingredients";
 
             // connect header to list
             LayoutInflater inflater = getLayoutInflater();
-            ViewGroup header =  (ViewGroup)inflater.inflate(R.layout.listview_header, itemList, false);
+            ViewGroup header =  (ViewGroup)inflater.inflate(R.layout.listview_header, ingredientList, false);
             TextView HeaderText = header.findViewById(R.id.header);
-            HeaderText.setText("List of Ingredients");
-            itemList.addHeaderView(header, null, false);
+            HeaderText.setText(ingredientListed);
+            ingredientList.addHeaderView(header, null, false);
 
-            itemList.setAdapter(adapter);
-            itemList.setOnItemClickListener(new IngredientActivity.ListClickListener());
+            ingredientList.setAdapter(adapter);
+            ingredientList.setOnItemClickListener(new IngredientActivity.ListClickListener());
         }
 
         @Override
-        public void gotItemsError(String message) {
+        public void gotIngredientsError(String message) {
             // send a message if error has occured
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
             toast.show();
@@ -81,19 +80,19 @@ public class IngredientActivity extends AppCompatActivity implements IngredientR
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                //spinner.setVisibility(View.VISIBLE);
+                spinner.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(IngredientActivity.this, IngredientDetailActivity.class);
                 Ingredient ingredient = (Ingredient) adapterView.getItemAtPosition(i);
 
                 // check if ingredient has id
                 id_message = ingredient.getId();
                 if (id_message != null) {
-                    intent.putExtra("id_message", id_message.toString());
+                    intent.putExtra("id_message", id_message);
                 }
                 else { intent.putExtra("ingredient", ingredient);}
 
                 startActivity(intent);
-                //spinner.setVisibility(View.GONE);
+                spinner.setVisibility(View.GONE);
             }
         }
 }

@@ -85,9 +85,8 @@ public class RandomRequest implements Response.ErrorListener, Response.Listener<
                 gluten = item.getString("glutenFree");
                 recipe_id = item.getString("id");
 
-                // add new menu item to arraylist
-                //recipes.add(new Recept(name, image));
-                recipes.add(new Recept(name, image, instructions, vegetarian, gluten, recipe_id));
+                // add new recipe item to arraylist
+                recipes.add(new Recept(name, image, vegetarian, gluten, instructions, recipe_id));
             }
         }
         // exception for network error

@@ -14,7 +14,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 
-// connect menu item with activity menu
+// connect random recipe item with random activity list
 public class RandomAdapter extends ArrayAdapter<Recept> {
 
     ArrayList<Recept> recipes;
@@ -28,7 +28,6 @@ public class RandomAdapter extends ArrayAdapter<Recept> {
     }
 
     // create fields for adapterview
-    @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inf = LayoutInflater.from(getContext());

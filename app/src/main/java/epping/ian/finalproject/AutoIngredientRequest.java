@@ -23,8 +23,8 @@ public class AutoIngredientRequest implements Response.ErrorListener, Response.L
 
     // call methods for error and succesful requests
     public interface Callback {
-        void gotItems(ArrayList<Ingredient> ingredients);
-        void gotItemsError(String message);
+        void gotIngredients(ArrayList<Ingredient> ingredients);
+        void gotIngredientsError(String message);
     }
 
     private Context context;
@@ -54,7 +54,7 @@ public class AutoIngredientRequest implements Response.ErrorListener, Response.L
                 Request.Method.GET, url, null, this, this) {
 
             // provides API key
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
                 params.put("X-RapidAPI-Key", "0dba1026cfmsh3b124a3d158d5d7p11beddjsn4b004a646531");
                 Log.d("Parameters", this.toString());
@@ -91,12 +91,12 @@ public class AutoIngredientRequest implements Response.ErrorListener, Response.L
             e.printStackTrace();
         }
         // pass list back to calling activity
-        callback.gotItems(ingredients);
+        callback.gotIngredients(ingredients);
     }
     // handles request errors
     @Override
     public void onErrorResponse(VolleyError error) {
-        callback.gotItemsError(error.getMessage());
+        callback.gotIngredientsError(error.getMessage());
         error.printStackTrace();
     }
 }

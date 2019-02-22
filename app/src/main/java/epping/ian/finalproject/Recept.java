@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class Recept implements Serializable {
 
-    //create class for all recipe categories
+    //create variables for all recipe categories
     private String name, image, instructions, content, vegetarian, gluten, recipe_id;
 
-    // constructor for recipe drawn from random and full search
-    public Recept(String name, String image, String instructions, String vegetarian, String gluten, String recipe_id) {
+    // constructor for recipes found with random and detailed search
+    public Recept(String name, String image, String vegetarian, String gluten, String instructions, String recipe_id) {
         this.name = name;
         this.image = image;
         this.instructions = instructions;
@@ -17,21 +17,13 @@ public class Recept implements Serializable {
         this.recipe_id = recipe_id;
     }
 
-    // constructor for recipe drawn from calory search
+    // constructor for recipe found through calory search
     public Recept(String name, String image, String content, String recipe_id) {
         this.name = name;
         this.image = image;
         this.content = content;
         this.recipe_id = recipe_id;
     }
-
-    //Todo: remove this
-    // constructor for recipe drawn from ingredient search
-    //public Recept(String name, String image, String recipe_id) {
-        //this.name = name;
-        //this.image = image;
-        //this.recipe_id = recipe_id;
-    //}
 
     // retrieve the fields
     String getName() { return name; }

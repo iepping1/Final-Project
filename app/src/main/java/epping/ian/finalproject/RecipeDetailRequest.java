@@ -68,26 +68,25 @@ public class RecipeDetailRequest implements Response.ErrorListener, Response.Lis
     public void onResponse(JSONObject object) {
 
         // define the recipe fields
-        String name, image, id, instructed, instructions, vegetarian, gluten;
+        String name, vegetarian, gluten, image, instructed, instructions, recipe_id;
         String no_instructions = "NULL";
 
         try {
             // get all info from the site
             name = object.getString("title");
+            vegetarian = "Vegetarian: " + object.getString("vegetarian");
+            gluten = "Glutenfree: " + object.getString("glutenFree");
             image = object.getString("image");
-            id = object.getString("id");
+            recipe_id = object.getString("id");
 
             // some recipes dont have instructions
             instructed = object.getString("instructions");
-            if ( instructed.toLowerCase().indexOf(no_instructions.toLowerCase()) != -1) {
+            if ( instructed.toLowerCase().contains(no_instructions.toLowerCase())) {
                 instructions = "This recipe has no Instructions"; }
             else{ instructions = instructed;}
 
-            vegetarian = object.getString("vegetarian");
-            gluten = object.getString("glutenFree");
-
             // add new recipe data to detail activity
-            recipe = new Recept(name, image, instructions, vegetarian, gluten, id);
+            recipe = new Recept(name, image, vegetarian, gluten, instructions, recipe_id);
         }
         // exception for network error
         catch (JSONException e) {

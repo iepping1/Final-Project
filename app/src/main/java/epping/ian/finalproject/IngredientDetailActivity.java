@@ -20,7 +20,7 @@ public class IngredientDetailActivity extends AppCompatActivity implements Ingre
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_detail);
+        setContentView(R.layout.activity_ingredient_detail);
         imageLoader = ImageRequest.getInstance(this.getApplicationContext()).getImageLoader();
         spinner = findViewById(R.id.progressBarDI);
         spinner.setVisibility(View.GONE);
@@ -70,11 +70,15 @@ public class IngredientDetailActivity extends AppCompatActivity implements Ingre
         TextView ingredientCarbs = findViewById(R.id.ingredient_carbs);
         NetworkImageView ingredientImage = findViewById(R.id.ingredient_detail_image);
 
+        String protein = ingredient.getProtein() + "% Protein";
+        String fatty = ingredient.getFat() + "% Fat";
+        String carbo = ingredient.getCarbs() + "% Carbs";
+
         // connect selected recipe to views
         ingredientName.setText(ingredient.getName());
-        ingredientProtein.setText(ingredient.getProtein() + "% Protein");
-        ingredientFat.setText(ingredient.getFat() + "% Fat");
-        ingredientCarbs.setText(ingredient.getCarbs() + "% Carbs");
+        ingredientProtein.setText(protein);
+        ingredientFat.setText(fatty);
+        ingredientCarbs.setText(carbo);
 
         // set image
         String image = ingredient.getImageURL();

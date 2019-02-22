@@ -7,15 +7,14 @@ public class Ingredient implements Serializable {
     // create variable for all possible ingredient fields
     private String name, image, amount, protein, fat, carbs, ingredient_id;
 
-
-    // constructor for ingredient drawn from main window
+    // constructor for ingredient found via autocomplete search
     public Ingredient(String name, String image, String amount) {
         this.name = name;
         this.image = image;
         this.amount = amount;
     }
 
-    // constructors for ingredient drawn from recipe
+    // constructors for ingredient found through recipes
     public Ingredient(String name, String image, String amount, String ingredient_id) {
         this.name = name;
         this.image = image;
@@ -23,7 +22,7 @@ public class Ingredient implements Serializable {
         this.ingredient_id = ingredient_id;
     }
 
-    // constructors for ingredient detail
+    // constructors for detailed ingredient information
     public Ingredient(String name, String image, String protein, String fat, String carbs, String ingredient_id) {
         this.name = name;
         this.image = image;

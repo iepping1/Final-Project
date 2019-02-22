@@ -45,11 +45,19 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
 
             // declare fields of detailed recipe
             TextView recipeName = findViewById(R.id.recipe_detail_name);
-            TextView recipeInstructions = findViewById(R.id.recipe_instructions);
+            TextView recipeVegetarian = findViewById(R.id.detail_vegetarian);
+            TextView recipeGluten = findViewById(R.id.detail_gluten);
             NetworkImageView recipeImage = findViewById(R.id.recipe_detail_image);
+            TextView recipeInstructions = findViewById(R.id.recipe_instructions);
+
+            // prepare special text
+            String vegetary = "Vegetarian: " + recipe.getVegetarian();
+            String gluten = "Glutenfree: " + recipe.getGluten();
 
             // set text
             recipeName.setText(recipe.getName());
+            recipeVegetarian.setText(vegetary);
+            recipeGluten.setText(gluten);
             recipeInstructions.setText(recipe.getInstructions());
 
             // set image
@@ -67,11 +75,15 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
 
         // declare fields of detailed recipe
         TextView recipeName = findViewById(R.id.recipe_detail_name);
-        TextView recipeInstructions = findViewById(R.id.recipe_instructions);
+        TextView recipeVegetarian = findViewById(R.id.detail_vegetarian);
+        TextView recipeGluten = findViewById(R.id.detail_gluten);
         NetworkImageView recipeImage = findViewById(R.id.recipe_detail_image);
+        TextView recipeInstructions = findViewById(R.id.recipe_instructions);
 
         // connect selected recipe to views
         recipeName.setText(recipe.getName());
+        recipeVegetarian.setText(recipe.getVegetarian());
+        recipeGluten.setText(recipe.getGluten());
         recipeInstructions.setText(recipe.getInstructions());
 
         // set image
@@ -95,6 +107,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
         spinner.setVisibility(View.GONE);
     }
 
+    // return to main activity
     public void ReturnClickedR (View view){
         spinner.setVisibility(View.VISIBLE);
         Intent intent = new Intent(RecipeDetailActivity.this, MainActivity.class);

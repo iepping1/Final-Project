@@ -14,7 +14,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 
-// connect menu item with activity menu
+// connect ingredient item with ingredient list
 public class IngredientAdapter extends ArrayAdapter<Ingredient> {
 
     ArrayList<Ingredient> ingredients;
@@ -28,7 +28,6 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
     }
 
     // create fields for adapterview
-    @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inf = LayoutInflater.from(getContext());
