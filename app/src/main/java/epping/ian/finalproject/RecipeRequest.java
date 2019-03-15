@@ -23,7 +23,7 @@ public class RecipeRequest implements Response.ErrorListener, Response.Listener<
     // call methods for error and succesful requests
     public interface Callback {
         void gotRecipes(ArrayList<Recept> recipes);
-        void gotError(String message);
+        void gotRecipesError(String message);
     }
 
     private Context context;
@@ -38,7 +38,7 @@ public class RecipeRequest implements Response.ErrorListener, Response.Listener<
     }
 
     // retrieves recipe information
-    void getRecipes(Callback callback, String message){
+    void getRecipes(Callback callback, String message) {
         this.callback = callback;
         this.message = message;
 
@@ -53,7 +53,7 @@ public class RecipeRequest implements Response.ErrorListener, Response.Listener<
                 Request.Method.GET, url, null, this, this) {
 
             // provides API key
-            public Map<String, String> getHeaders(){
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
                 params.put("X-RapidAPI-Key", "0dba1026cfmsh3b124a3d158d5d7p11beddjsn4b004a646531");
                 Log.d("Parameters", this.toString());
@@ -68,7 +68,7 @@ public class RecipeRequest implements Response.ErrorListener, Response.Listener<
     public void onResponse(JSONArray jsonArray) {
 
         // define the recipe fields
-        String name, image, count, content, recipe_id;
+        String name, image, count, content, recipeId;
 
         try {
             // fill list with all recipe data
@@ -80,10 +80,10 @@ public class RecipeRequest implements Response.ErrorListener, Response.Listener<
                     image = object.getString("image");
                     count = object.getString("usedIngredientCount");
                     content = count + "Used Ingredients";
-                    recipe_id = object.getString("id");
+                    recipeId = object.getString("id");
 
                     // add new ingredient recipe item to arraylist
-                    recipes.add(new Recept(name, image, content, recipe_id));
+                    recipes.add(new Recept(name, image, content, recipeId));
                 }
             }
             else if (message.charAt(0) == 'N') {
@@ -94,25 +94,26 @@ public class RecipeRequest implements Response.ErrorListener, Response.Listener<
                     image = object.getString("image");
                     count = object.getString("calories");
                     content = "Calory Amount = " + count;
-                    recipe_id = object.getString("id");
+                    recipeId = object.getString("id");
 
                     // add new nutrient recipe item to arraylist
-                    recipes.add(new Recept(name, image, content, recipe_id));
+                    recipes.add(new Recept(name, image, content, recipeId));
                 }
             }
         }
-        // exception for network error
+        // exception for parsing error
         catch (JSONException e) {
+            callback.gotRecipesError(e.getMessage());
             e.printStackTrace();
         }
         // pass list back to calling activity
         callback.gotRecipes(recipes);
     }
 
-    // handles request errors
+    // handles request network errors
     @Override
     public void onErrorResponse(VolleyError error) {
-        callback.gotError(error.getMessage());
+        callback.gotRecipesError(error.getMessage());
         error.printStackTrace();
     }
 }

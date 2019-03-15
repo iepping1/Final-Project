@@ -39,7 +39,7 @@ public class IngredientRequest implements Response.ErrorListener, Response.Liste
     }
 
     // retrieves selected ingredients
-    public void getIngredients(Callback callback, String message){
+    public void getIngredients(Callback callback, String message) {
         this.callback = callback;
         this.message = message;
 
@@ -68,8 +68,6 @@ public class IngredientRequest implements Response.ErrorListener, Response.Liste
     @Override
     public void onResponse(JSONObject response) {
 
-        // define ingredient fields and array
-        String ingredient_id, name, image, imaged, amount;
         JSONArray IngredientArray;
 
         try {
@@ -80,24 +78,25 @@ public class IngredientRequest implements Response.ErrorListener, Response.Liste
                 JSONObject object = IngredientArray.getJSONObject(i);
 
                 // get all info from the site
-                ingredient_id = object.getString("id");
-                name = object.getString("name");
-                imaged = object.getString("image");
-                image = "https://spoonacular.com/cdn/ingredients_100x100/" + imaged;
-                amount = object.getString("originalString");
+                String ingredientId = object.getString("id");
+                String name = object.getString("name");
+                String imaged = object.getString("image");
+                String image = "https://spoonacular.com/cdn/ingredients_100x100/" + imaged;
+                String amount = object.getString("originalString");
 
                 // add new ingredient item to arraylist
-                ingredients.add(new Ingredient(name, image, amount, ingredient_id));
+                ingredients.add(new Ingredient(name, image, amount, ingredientId));
             }
         }
-        // exception for network error
+        // exception for parsing error
         catch (JSONException e) {
+            callback.gotIngredientsError(e.getMessage());
             e.printStackTrace();
         }
         // pass list back to calling activity
         callback.gotIngredients(ingredients);
     }
-    // handles request errors
+    // handles network request errors
     @Override
     public void onErrorResponse(VolleyError error) {
         callback.gotIngredientsError(error.getMessage());

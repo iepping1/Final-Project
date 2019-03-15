@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class IngredientActivity extends AppCompatActivity implements IngredientRequest.Callback, AutoIngredientRequest.Callback {
 
-    String recipe, id_message, message;
+    String recipe, idMessage, message;
     ProgressBar spinner;
 
         // create the ingredient window
@@ -31,8 +31,8 @@ public class IngredientActivity extends AppCompatActivity implements IngredientR
             Intent intent = getIntent();
 
             // check from which activity ingredient was chosen
-            if (intent.getStringExtra("recipe_id") != null) {
-                recipe = intent.getStringExtra("recipe_id");
+            if (intent.getStringExtra("recipeId") != null) {
+                recipe = intent.getStringExtra("recipeId");
                 message = "recipes/" + recipe + "/information";
 
                 // get ingredient connected to recipe
@@ -85,9 +85,9 @@ public class IngredientActivity extends AppCompatActivity implements IngredientR
                 Ingredient ingredient = (Ingredient) adapterView.getItemAtPosition(i);
 
                 // check if ingredient has id
-                id_message = ingredient.getId();
-                if (id_message != null) {
-                    intent.putExtra("id_message", id_message);
+                idMessage = ingredient.getId();
+                if (idMessage != null) {
+                    intent.putExtra("idMessage", idMessage);
                 }
                 else { intent.putExtra("ingredient", ingredient);}
 

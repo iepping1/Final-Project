@@ -39,7 +39,7 @@ public class AutoIngredientRequest implements Response.ErrorListener, Response.L
     }
 
     // retrieves recipe ID
-    public void getAutoIngredients(Callback callback, String message){
+    public void getAutoIngredients(Callback callback, String message) {
         this.callback = callback;
         this.message = message;
 
@@ -68,32 +68,30 @@ public class AutoIngredientRequest implements Response.ErrorListener, Response.L
     @Override
     public void onResponse(JSONArray jsonArray) {
 
-        // define ingredient fields and array
-        String name, image, imaged, amount;
-
         try {
             // fill list with all ingredient items
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
 
                 // get all info from the site
-                name = object.getString("name");
-                imaged = object.getString("image");
-                image = "https://spoonacular.com/cdn/ingredients_500x500/" + imaged;
-                amount = "Want to See More?";
+                String name = object.getString("name");
+                String imaged = object.getString("image");
+                String image = "https://spoonacular.com/cdn/ingredients_500x500/" + imaged;
+                String amount = "Want to See More?";
 
                 // add new ingredient item to arraylist
                 ingredients.add(new Ingredient(name, image, amount));
             }
         }
-        // exception for network error
+        // exception for parsing error
         catch (JSONException e) {
+            callback.gotIngredientsError(e.getMessage());
             e.printStackTrace();
         }
         // pass list back to calling activity
         callback.gotIngredients(ingredients);
     }
-    // handles request errors
+    // handles network request errors
     @Override
     public void onErrorResponse(VolleyError error) {
         callback.gotIngredientsError(error.getMessage());

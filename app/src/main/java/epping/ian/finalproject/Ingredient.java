@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Ingredient implements Serializable {
 
     // create variable for all possible ingredient fields
-    private String name, image, amount, protein, fat, carbs, ingredient_id;
+    private String name, image, amount, protein, fat, carbs, ingredientId;
 
     // constructor for ingredient found via autocomplete search
     public Ingredient(String name, String image, String amount) {
@@ -15,21 +15,21 @@ public class Ingredient implements Serializable {
     }
 
     // constructors for ingredient found through recipes
-    public Ingredient(String name, String image, String amount, String ingredient_id) {
+    public Ingredient(String name, String image, String amount, String ingredientId) {
         this.name = name;
         this.image = image;
         this.amount = amount;
-        this.ingredient_id = ingredient_id;
+        this.ingredientId = ingredientId;
     }
 
     // constructors for detailed ingredient information
-    public Ingredient(String name, String image, String protein, String fat, String carbs, String ingredient_id) {
+    public Ingredient(String name, String image, String protein, String fat, String carbs, String ingredientId) {
         this.name = name;
         this.image = image;
         this.protein= protein;
         this.fat = fat;
         this.carbs = carbs;
-        this.ingredient_id = ingredient_id;
+        this.ingredientId = ingredientId;
     }
 
     // retrieve the fields
@@ -45,7 +45,7 @@ public class Ingredient implements Serializable {
 
     String getCarbs() { return carbs; }
 
-    String getId() { return ingredient_id; }
+    String getId() { return ingredientId; }
 
     public void setName(String name) { this.name = name; }
 

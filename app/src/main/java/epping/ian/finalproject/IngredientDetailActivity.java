@@ -13,7 +13,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 public class IngredientDetailActivity extends AppCompatActivity implements IngredientDetailRequest.Callback {
 
-    String ingredient_name, message, ingredient_id;
+    String ingredientName, message, ingredientId;
     ImageLoader imageLoader;
     ProgressBar spinner;
 
@@ -29,8 +29,8 @@ public class IngredientDetailActivity extends AppCompatActivity implements Ingre
         Intent intent = getIntent();
 
         // request detailed ingredient information
-        if (intent.getStringExtra("id_message") != null) {
-            message = intent.getStringExtra("id_message");
+        if (intent.getStringExtra("idMessage") != null) {
+            message = intent.getStringExtra("idMessage");
 
             IngredientDetailRequest detailRequest = new IngredientDetailRequest(this, message);
             detailRequest.getIngredientDetails(this, message);
@@ -38,14 +38,14 @@ public class IngredientDetailActivity extends AppCompatActivity implements Ingre
         else {
             // get name of ingredient
             Ingredient ingredient = (Ingredient) intent.getSerializableExtra("ingredient");
-            ingredient_name = ingredient.getName();
+            ingredientName = ingredient.getName();
 
             // give it the proper data
             TextView named = findViewById(R.id.ingredient_detail_name);
             NetworkImageView imaged = findViewById(R.id.ingredient_detail_image);
 
             // set name text
-            named.setText(ingredient_name);
+            named.setText(ingredientName);
 
             // set image
             String image = ingredient.getImageURL();
@@ -58,11 +58,11 @@ public class IngredientDetailActivity extends AppCompatActivity implements Ingre
 
         imageLoader = ImageRequest.getInstance(this.getApplicationContext()).getImageLoader();
 
-        ingredient_id = ingredient.getId();
-        ingredient_name = ingredient.getName();
+        ingredientId = ingredient.getId();
+        ingredientName = ingredient.getName();
 
         // declare fields of detailed recipe
-        TextView ingredientName = findViewById(R.id.ingredient_detail_name);
+        TextView ingredientDetailName = findViewById(R.id.ingredient_detail_name);
         TextView ingredientProtein = findViewById(R.id.ingredient_protein);
         TextView ingredientFat = findViewById(R.id.ingredient_fat);
         TextView ingredientCarbs = findViewById(R.id.ingredient_carbs);
@@ -73,7 +73,7 @@ public class IngredientDetailActivity extends AppCompatActivity implements Ingre
         String carbo = ingredient.getCarbs() + "% Carbs";
 
         // connect selected recipe to views
-        ingredientName.setText(ingredient.getName());
+        ingredientDetailName.setText(ingredient.getName());
         ingredientProtein.setText(protein);
         ingredientFat.setText(fatty);
         ingredientCarbs.setText(carbo);
@@ -84,22 +84,22 @@ public class IngredientDetailActivity extends AppCompatActivity implements Ingre
     }
 
     @Override
-    public void gotError(String message) {
+    public void gotIngredientDetailError(String message) {
         // send a message if error has occured
         Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         toast.show();
     }
 
     // switch to list of recipes with this ingredient
-    public void SearchClicked (View view){
+    public void SearchClicked (View view) {
         spinner.setVisibility(View.VISIBLE);
         Intent intent = new Intent(IngredientDetailActivity.this, RecipeActivity.class);
-        intent.putExtra("ingredient_detail_name", ingredient_name);
+        intent.putExtra("ingredientDetailName", ingredientName);
         startActivity(intent);
         spinner.setVisibility(View.GONE);
     }
 
-    public void ReturnClickedI (View view){
+    public void ReturnClickedI (View view) {
         spinner.setVisibility(View.VISIBLE);
         Intent intent = new Intent(IngredientDetailActivity.this, MainActivity.class);
         startActivity(intent);

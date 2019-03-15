@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class RecipeActivity extends AppCompatActivity implements RecipeRequest.Callback{
 
-    String message, id_message, ingredient_input, calory_input;
+    String message, idMessage, ingredientInput, caloryInput;
     ProgressBar spinner;
 
     // Create recipe list window
@@ -31,17 +31,17 @@ public class RecipeActivity extends AppCompatActivity implements RecipeRequest.C
         Intent intent = getIntent();
 
         // check from which activity recipe was chosen
-        if (intent.getStringExtra("ingredient_detail_name") != null) {
+        if (intent.getStringExtra("ingredientDetailName") != null) {
 
             // catch ingredient item and show 5 connected recipes
-            ingredient_input = intent.getStringExtra("ingredient_detail_name");
-            message = "Ingredients?number=5&ingredients=" + ingredient_input;
+            ingredientInput = intent.getStringExtra("ingredientDetailName");
+            message = "Ingredients?number=5&ingredients=" + ingredientInput;
         }
-        else if (intent.getStringExtra("calories") != null){
+        else if (intent.getStringExtra("calories") != null) {
 
             // catch daily calory treshold and show appropriate recipes
-            calory_input = intent.getStringExtra("calories");
-            message = "Nutrients?number=6&maxCalories=" + calory_input + "&minCalories=0";
+            caloryInput = intent.getStringExtra("calories");
+            message = "Nutrients?number=6&maxCalories=" + caloryInput + "&minCalories=0";
         }
 
         // get the recipe from the site
@@ -70,7 +70,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeRequest.C
 
     // send a message if error has occured
     @Override
-    public void gotError(String message) {
+    public void gotRecipesError(String message) {
         Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         toast.show();
     }
@@ -86,8 +86,8 @@ public class RecipeActivity extends AppCompatActivity implements RecipeRequest.C
             Recept recipe = (Recept) adapterView.getItemAtPosition(i);
 
             // pass on id of recipe
-            id_message = recipe.getRecipeId();
-            intent.putExtra("id_message", id_message.toString() );
+            idMessage = recipe.getRecipeId();
+            intent.putExtra("idMessage", idMessage.toString() );
             startActivity(intent);
             spinner.setVisibility(View.GONE);
         }

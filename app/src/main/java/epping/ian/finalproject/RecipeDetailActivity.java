@@ -13,7 +13,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 public class RecipeDetailActivity extends AppCompatActivity implements RecipeDetailRequest.Callback {
 
-    String recipe_id, ingredient, message;
+    String recipeId, ingredient, message;
     ImageLoader imageLoader;
     ProgressBar spinner;
 
@@ -31,8 +31,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
         Intent intent = getIntent();
 
         // request detailed recipe information
-        if (intent.getStringExtra("id_message") != null) {
-            message = intent.getStringExtra("id_message");
+        if (intent.getStringExtra("idMessage") != null) {
+            message = intent.getStringExtra("idMessage");
 
             RecipeDetailRequest detailRequest = new RecipeDetailRequest(this, message);
             detailRequest.getRecipeDetails(this, message);
@@ -41,7 +41,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
         else {
             // get id of recipe
             Recept recipe = (Recept) intent.getSerializableExtra("recept");
-            recipe_id = recipe.getRecipeId();
+            recipeId = recipe.getRecipeId();
 
             // declare fields of detailed recipe
             TextView recipeName = findViewById(R.id.recipe_detail_name);
@@ -71,7 +71,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
 
         imageLoader = ImageRequest.getInstance(this.getApplicationContext()).getImageLoader();
 
-        recipe_id = recipe.getRecipeId();
+        recipeId = recipe.getRecipeId();
 
         // declare fields of detailed recipe
         TextView recipeName = findViewById(R.id.recipe_detail_name);
@@ -92,23 +92,23 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
     }
 
     @Override
-    public void gotError(String message) {
+    public void gotRecipeDetailError(String message) {
         // send a message if error has occured
         Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         toast.show();
     }
 
     // switch to list of recipe's ingredients
-    public void IngredientClicked (View view){
+    public void IngredientClicked (View view) {
         spinner.setVisibility(View.VISIBLE);
         Intent intent = new Intent(RecipeDetailActivity.this, IngredientActivity.class);
-        intent.putExtra("recipe_id", recipe_id);
+        intent.putExtra("recipeId", recipeId);
         startActivity(intent);
         spinner.setVisibility(View.GONE);
     }
 
     // return to main activity
-    public void ReturnClickedR (View view){
+    public void ReturnClickedR (View view) {
         spinner.setVisibility(View.VISIBLE);
         Intent intent = new Intent(RecipeDetailActivity.this, MainActivity.class);
         startActivity(intent);

@@ -36,7 +36,7 @@ public class RandomActivity extends AppCompatActivity implements RandomRequest.C
     }
 
     @Override
-    public void gotRecipes(ArrayList<Recept> recipes) {
+    public void gotRandomRecipes(ArrayList<Recept> recipes) {
         RandomAdapter adapter = new RandomAdapter(this, R.layout.recept, recipes);
 
         // connect adapter to listview
@@ -53,7 +53,7 @@ public class RandomActivity extends AppCompatActivity implements RandomRequest.C
     }
 
     @Override
-    public void gotRecipesError(String message) {
+    public void gotRandomError(String message) {
         // send a message if error has occured
         Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         toast.show();

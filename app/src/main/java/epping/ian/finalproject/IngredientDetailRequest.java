@@ -21,12 +21,12 @@ public class IngredientDetailRequest implements Response.ErrorListener, Response
     // call methods for error and succesful requests
     public interface Callback {
         void gotIngredientDetails(Ingredient ingredient);
-        void gotError(String message);
+        void gotIngredientDetailError(String message);
     }
 
     private Context context;
     private Callback callback;
-    public String ingredient_id, message;
+    public String ingredientId, message;
     public Ingredient ingredient;
 
     // constructor for context parameter
@@ -36,9 +36,9 @@ public class IngredientDetailRequest implements Response.ErrorListener, Response
     }
 
     // retrieves recipe information
-    void getIngredientDetails(Callback callback, String ingredient_id){
+    void getIngredientDetails(Callback callback, String ingredientId) {
         this.callback = callback;
-        this.ingredient_id = ingredient_id;
+        this.ingredientId = ingredientId;
 
         // link to the recipe API
         String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/"
@@ -52,7 +52,7 @@ public class IngredientDetailRequest implements Response.ErrorListener, Response
                 Request.Method.GET, url, null, this, this) {
 
             // provides API key
-            public Map<String, String> getHeaders(){
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
                 params.put("X-RapidAPI-Key", "0dba1026cfmsh3b124a3d158d5d7p11beddjsn4b004a646531");
                 Log.d("Parameters", this.toString());
@@ -66,39 +66,38 @@ public class IngredientDetailRequest implements Response.ErrorListener, Response
     @Override
     public void onResponse(JSONObject object) {
 
-        // define the recipe fields
-        String name, image, imaged, ingredient_id, protein, fat, carbs;
         JSONObject nutrients, breakdown;
 
         try {
             // get all info from the site
-            name = object.getString("name");
-            imaged = object.getString("image");
-            image = "https://spoonacular.com/cdn/ingredients_500x500/" + imaged;
-            ingredient_id = object.getString("id");
+            String name = object.getString("name");
+            String imaged = object.getString("image");
+            String image = "https://spoonacular.com/cdn/ingredients_500x500/" + imaged;
+            String ingredientId = object.getString("id");
 
             nutrients = object.getJSONObject("nutrition");
             breakdown = nutrients.getJSONObject("caloricBreakdown");
 
-            protein = breakdown.getString("percentProtein");
-            fat = breakdown.getString("percentFat");
-            carbs = breakdown.getString("percentCarbs");
+            String protein = breakdown.getString("percentProtein");
+            String fat = breakdown.getString("percentFat");
+            String carbs = breakdown.getString("percentCarbs");
 
             // add new recipe data to detail activity
-            ingredient = new Ingredient(name, image, protein, fat, carbs, ingredient_id);
+            ingredient = new Ingredient(name, image, protein, fat, carbs, ingredientId);
         }
-        // exception for network error
+        // exception for parsing error
         catch (JSONException e) {
+            callback.gotIngredientDetailError(e.getMessage());
             e.printStackTrace();
         }
         // pass recipe back to calling activity
         callback.gotIngredientDetails(ingredient);
     }
 
-    // handles request errors
+    // handles network request errors
     @Override
     public void onErrorResponse(VolleyError error) {
-        callback.gotError(error.getMessage());
+        callback.gotIngredientDetailError(error.getMessage());
         error.printStackTrace();
     }
 }

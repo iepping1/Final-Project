@@ -23,12 +23,12 @@ public class RecipeDetailRequest implements Response.ErrorListener, Response.Lis
     // call methods for error and succesful requests
     public interface Callback {
         void gotRecipeDetails(Recept recipe);
-        void gotError(String message);
+        void gotRecipeDetailError(String message);
     }
 
     private Context context;
     private Callback callback;
-    public String recipe_id, message;
+    public String recipeId, message;
     public Recept recipe;
 
     // constructor for context parameter
@@ -38,9 +38,9 @@ public class RecipeDetailRequest implements Response.ErrorListener, Response.Lis
     }
 
     // retrieves recipe information
-    void getRecipeDetails(Callback callback, String recipe_id){
+    void getRecipeDetails(Callback callback, String recipeId) {
         this.callback = callback;
-        this.recipe_id = recipe_id;
+        this.recipeId = recipeId;
 
         // link to the recipe API
         String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" + message + "/information";
@@ -53,7 +53,7 @@ public class RecipeDetailRequest implements Response.ErrorListener, Response.Lis
                 Request.Method.GET, url, null, this, this) {
 
             // provides API key
-            public Map<String, String> getHeaders(){
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
                 params.put("X-RapidAPI-Key", "0dba1026cfmsh3b124a3d158d5d7p11beddjsn4b004a646531");
                 Log.d("Parameters", this.toString());
@@ -68,38 +68,39 @@ public class RecipeDetailRequest implements Response.ErrorListener, Response.Lis
     public void onResponse(JSONObject object) {
 
         // define the recipe fields
-        String name, vegetarian, gluten, image, instructed, instructions, recipe_id;
-        String no_instructions = "NULL";
+        String instructions;
+        String noInstructions = "NULL";
 
         try {
             // get all info from the site
-            name = object.getString("title");
-            vegetarian = "Vegetarian: " + object.getString("vegetarian");
-            gluten = "Glutenfree: " + object.getString("glutenFree");
-            image = object.getString("image");
-            recipe_id = object.getString("id");
+            String name = object.getString("title");
+            String vegetarian = "Vegetarian: " + object.getString("vegetarian");
+            String gluten = "Glutenfree: " + object.getString("glutenFree");
+            String image = object.getString("image");
+            String recipeId = object.getString("id");
 
             // some recipes dont have instructions
-            instructed = object.getString("instructions");
-            if ( instructed.toLowerCase().contains(no_instructions.toLowerCase())) {
+            String instructed = object.getString("instructions");
+            if ( instructed.toLowerCase().contains(noInstructions.toLowerCase())) {
                 instructions = "This recipe has no Instructions"; }
             else{ instructions = instructed;}
 
             // add new recipe data to detail activity
-            recipe = new Recept(name, image, vegetarian, gluten, instructions, recipe_id);
+            recipe = new Recept(name, image, vegetarian, gluten, instructions, recipeId);
         }
-        // exception for network error
+        // exception for parsing error
         catch (JSONException e) {
+            callback.gotRecipeDetailError(e.getMessage());
             e.printStackTrace();
         }
         // pass recipe back to calling activity
         callback.gotRecipeDetails(recipe);
     }
 
-    // handles request errors
+    // handles network request errors
     @Override
     public void onErrorResponse(VolleyError error) {
-        callback.gotError(error.getMessage());
+        callback.gotRecipeDetailError(error.getMessage());
         error.printStackTrace();
     }
 }

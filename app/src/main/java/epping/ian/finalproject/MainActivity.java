@@ -32,18 +32,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // clear text inputs when returning to main
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         getCalory.setText("");
         getQuery.setText("");
     }
 
     // Move to selected recipe
-    public void RecipeClicked (View view){
+    public void RecipeClicked (View view) {
 
         calories = getCalory.getText().toString();
 
-        if(calories.equals("")){
+        if(calories.equals("")) {
             // ask user to input calory treshold
             Toast toast = Toast.makeText(this, "Please enter your Calory Treshold", Toast.LENGTH_SHORT);
             toast.show();
@@ -63,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Search for ingredients
-    public void IngredientClicked (View view){
+    public void IngredientClicked (View view) {
         query = getQuery.getText().toString();
 
-        if(query.equals("")){
+        if(query.equals("")) {
             // ask user to input calory treshold
             Toast toast = Toast.makeText(this, "Need some letters first", Toast.LENGTH_SHORT);
             toast.show();
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Search recipes randomly
-    public void RandomClicked (View view){
+    public void RandomClicked (View view) {
         // show loading spinner
         spinner.setVisibility(View.VISIBLE);
 

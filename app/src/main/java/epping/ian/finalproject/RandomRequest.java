@@ -23,8 +23,8 @@ public class RandomRequest implements Response.ErrorListener, Response.Listener<
 
     // call methods for error and succesful requests
     public interface Callback {
-        void gotRecipes(ArrayList<Recept> recipes);
-        void gotRecipesError(String message);
+        void gotRandomRecipes(ArrayList<Recept> recipes);
+        void gotRandomError(String message);
     }
 
     private Context context;
@@ -37,7 +37,7 @@ public class RandomRequest implements Response.ErrorListener, Response.Listener<
     }
 
     // retrieves recipe information
-    void getRandomRecipes(Callback callback, String recept){
+    void getRandomRecipes(Callback callback, String recept) {
         this.callback = callback;
 
         // link to the recipe API
@@ -49,7 +49,7 @@ public class RandomRequest implements Response.ErrorListener, Response.Listener<
                 Request.Method.GET, url, null, this, this) {
 
             // provides API key
-            public Map<String, String> getHeaders(){
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
                 params.put("X-RapidAPI-Key", "0dba1026cfmsh3b124a3d158d5d7p11beddjsn4b004a646531");
                 Log.d("Parameters", this.toString());
@@ -63,9 +63,6 @@ public class RandomRequest implements Response.ErrorListener, Response.Listener<
     @Override
     public void onResponse(JSONObject response) {
 
-        // define the recipe fields
-        String name, image, instructions, vegetarian, gluten, recipe_id;
-
         //define list of recipes
         JSONArray jsonArray;
 
@@ -78,29 +75,30 @@ public class RandomRequest implements Response.ErrorListener, Response.Listener<
                 JSONObject item = jsonArray.getJSONObject(i);
 
                 // get all info from the random recipe
-                name = item.getString("title");
-                image = item.getString("image");
-                instructions = item.getString("instructions");
-                vegetarian = item.getString("vegetarian");
-                gluten = item.getString("glutenFree");
-                recipe_id = item.getString("id");
+                String name = item.getString("title");
+                String image = item.getString("image");
+                String instructions = item.getString("instructions");
+                String vegetarian = item.getString("vegetarian");
+                String gluten = item.getString("glutenFree");
+                String recipeId = item.getString("id");
 
                 // add new recipe item to arraylist
-                recipes.add(new Recept(name, image, vegetarian, gluten, instructions, recipe_id));
+                recipes.add(new Recept(name, image, vegetarian, gluten, instructions, recipeId));
             }
         }
-        // exception for network error
+        // exception for parsing error
         catch (JSONException e) {
+            callback.gotRandomError(e.getMessage());
             e.printStackTrace();
         }
         // pass list back to calling activity
-        callback.gotRecipes(recipes);
+        callback.gotRandomRecipes(recipes);
     }
 
-    // handles request errors
+    // handles network request errors
     @Override
     public void onErrorResponse(VolleyError error) {
-        callback.gotRecipesError(error.getMessage());
+        callback.gotRandomError(error.getMessage());
         error.printStackTrace();
     }
 }
