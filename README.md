@@ -10,8 +10,7 @@ Je kent vast wel wat recepten die je bevallen, maar je wilt niet elke dag hetzel
 Als je een app had, die talloze recepten kan ophalen en analyzeren aan de hand van hun inhoud en calorieen. Dan weet je van vooraf al of een recept die je interreseert goed is.
 Je hoeft alleen maar een paar zoekwoorden of parameters te gebruiken/kaders door te zoeken, en je hebt jouw antwoord. Het zoekt ook uit of een recept glutenvrij en/of vegetarisch is!
 
-![](https://github.com/iepping1/Final-Project/blob/master/docs/MainActivitySmall.png?raw=true)![](https://github.com/iepping1/Final-Project/blob/master/docs/RecipeActivitySmall.png?raw=true)
-![](https://github.com/iepping1/Final-Project/blob/master/docs/RecipeDetailActivitySmall.png?raw=true)![](https://github.com/iepping1/Final-Project/blob/master/docs/IngredientActivitySmall.png?raw=true)
+![](https://github.com/iepping1/Final-Project/blob/master/docs/RecipeActivitySmall.png?raw=true)![](https://github.com/iepping1/Final-Project/blob/master/docs/RecipeDetailActivitySmall.png?raw=true)![](https://github.com/iepping1/Final-Project/blob/master/docs/IngredientActivitySmall.png?raw=true)
 
 - Bekijk ook de video voor een demonstratie!
   Hier is de Product Demo Link: https://www.youtube.com/watch?v=KIxKFMXYup4
