@@ -14,3 +14,5 @@ Je hoeft alleen maar een paar zoekwoorden of parameters te gebruiken/kaders door
 
 - Bekijk ook de video voor een demonstratie!
   Hier is de Product Demo Link: https://www.youtube.com/watch?v=KIxKFMXYup4
+  
+- All images and information was drawn from the spoonacular site: https://rapidapi.com/spoonacular/api/recipe-food-nutrition
