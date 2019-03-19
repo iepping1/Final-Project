@@ -10,6 +10,8 @@ Je kent vast wel wat recepten die je bevallen, maar je wilt niet elke dag hetzel
 Als je een app had, die talloze recepten kan ophalen en analyzeren aan de hand van hun inhoud en calorieen. Dan weet je van vooraf al of een recept die je interreseert goed is.
 Je hoeft alleen maar een paar zoekwoorden of parameters te gebruiken/kaders door te zoeken, en je hebt jouw antwoord. Het zoekt ook uit of een recept glutenvrij en/of vegetarisch is!
 
+- Product Demo Link: https://www.youtube.com/watch?v=KIxKFMXYup4
+
 ## Generale Opzet
 - Main Activity (Kiezen tussen ingredienten via trefwoorden, recepten via calorieen of willekeurige recepten)
 - Recipe Actitity/Adapter & RecipeRequest (Laat een aantal resultaten zien aan de hand van de hoeveelheid calorieen die je in je dieet niet mag overschrijdenen stops ze allemaal in een lijst)
